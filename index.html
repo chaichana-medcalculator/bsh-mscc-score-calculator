@@ -132,13 +132,6 @@
       box-shadow: var(--shadow);
     }
 
-    .card h2,
-    .card h3,
-    .card h4 {
-      margin: 0 0 10px 0;
-      color: #1f3b5c;
-    }
-
     .section-title {
       margin: 0 0 14px;
       font-size: 15px;
@@ -160,7 +153,6 @@
 
     label {
       display: block;
-      margin-top: 0;
       margin-bottom: 6px;
       font-weight: 700;
       font-size: 13px;
@@ -169,7 +161,6 @@
 
     input, select {
       padding: 10px 12px;
-      margin-top: 0;
       width: 100%;
       border: 1px solid #cfd8e6;
       border-radius: 8px;
@@ -204,7 +195,6 @@
 
     .btn-secondary {
       background: var(--gray-btn);
-      margin-left: 0;
     }
 
     .btn-secondary:hover {
@@ -258,14 +248,26 @@
     }
 
     .result-head {
-      padding: 14px 16px;
+      padding: 16px 18px;
       border-bottom: 1px solid #e5edf8;
-      background: linear-gradient(90deg, #f7fbff 0%, #fdfefe 100%);
       display: flex;
       justify-content: space-between;
       gap: 12px;
       align-items: center;
       flex-wrap: wrap;
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .result-head.high {
+      background: linear-gradient(90deg, #b00020 0%, #d7263d 100%);
+      color: #ffffff;
+    }
+
+    .result-head.low {
+      background: linear-gradient(90deg, #0b7a0b 0%, #1f9d55 100%);
+      color: #ffffff;
     }
 
     .score-main {
@@ -277,39 +279,37 @@
 
     .score-label {
       font-size: 12px;
-      color: var(--muted);
+      color: rgba(255,255,255,0.92);
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.3px;
     }
 
     .score-value {
-      font-size: 30px;
+      font-size: 34px;
       font-weight: 800;
-      color: #153a73;
+      color: #ffffff;
       line-height: 1;
     }
 
     .risk-badge {
       display: inline-flex;
       align-items: center;
-      padding: 7px 11px;
+      padding: 8px 14px;
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
+      font-size: 13px;
+      font-weight: 800;
       white-space: nowrap;
+      background: rgba(255,255,255,0.16);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.28);
     }
 
-    .badge-high {
-      color: var(--red);
-      background: var(--red-soft);
-      border: 1px solid #f1c8d0;
-    }
-
+    .badge-high,
     .badge-low {
-      color: var(--green);
-      background: var(--green-soft);
-      border: 1px solid #cae8ca;
+      color: #ffffff;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.28);
     }
 
     .result-body {
@@ -318,7 +318,7 @@
 
     .metrics {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 12px 18px;
       margin-bottom: 14px;
     }
@@ -446,7 +446,6 @@
 
       button, .btn-secondary {
         width: 100%;
-        margin-left: 0;
       }
     }
   </style>
@@ -471,7 +470,6 @@
       </div>
     </div>
 
-    <!-- LAB SECTION -->
     <div class="card">
       <h4 class="section-title">Laboratory Parameters (Automatic NLR Calculation)</h4>
 
@@ -497,7 +495,6 @@
       </small>
     </div>
 
-    <!-- CLINICAL SECTION -->
     <div class="card">
       <h4 class="section-title">Clinical Predictors</h4>
 
@@ -573,7 +570,7 @@
       <div id="form_error" class="error"></div>
 
       <div id="result_box" class="result-box">
-        <div class="result-head">
+        <div class="result-head" id="result_head">
           <div class="score-main">
             <span class="score-label">BSH-MSCC Score</span>
             <span class="score-value" id="score_value">0</span>
@@ -597,14 +594,8 @@
               <div class="metric-name">Predicted 6-Month Mortality Risk</div>
               <div class="metric-value" id="mortality_value">-</div>
             </div>
-
-            <div class="metric">
-              <div class="metric-name">Calculated NLR</div>
-              <div class="metric-value" id="nlr_metric_value">-</div>
-            </div>
           </div>
 
-          <div id="result" style="font-size:14px; color:#334155;"></div>
           <div id="recommendation" class="recommendation-card" hidden></div>
         </div>
       </div>
@@ -625,10 +616,6 @@
           <a href="https://sites.google.com/view/bsh-mscc-score/home" target="_blank" rel="noopener noreferrer">
             https://sites.google.com/view/bsh-mscc-score/home
           </a>
-        </div>
-
-        <div class="mini-note">
-          For clinical decision-support purposes. Final treatment decisions should be individualized and multidisciplinary.
         </div>
       </div>
     </footer>
@@ -745,27 +732,20 @@
 
       const isHigh = totalScore > 18;
 
-      const resultEl = document.getElementById("result");
-      const recEl = document.getElementById("recommendation");
-      const resultBox = document.getElementById("result_box");
-
       document.getElementById("score_value").textContent = totalScore;
       document.getElementById("risk_group_value").textContent =
         isHigh ? "High risk (predicted survival <6 months)" : "Low risk (predicted survival ≥6 months)";
       document.getElementById("survival_value").textContent = `${(surv6 * 100).toFixed(1)}%`;
       document.getElementById("mortality_value").textContent = `${(deathRisk6 * 100).toFixed(1)}%`;
-      document.getElementById("nlr_metric_value").textContent =
-        `${nlr.toFixed(2)} (${nlr36 ? "High: >3.6" : "Low: ≤3.6"})`;
 
       const badge = document.getElementById("risk_badge");
+      const resultHead = document.getElementById("result_head");
       badge.textContent = isHigh ? "High Risk" : "Low Risk";
       badge.className = `risk-badge ${isHigh ? "badge-high" : "badge-low"}`;
+      resultHead.classList.remove("high", "low");
+      resultHead.classList.add(isHigh ? "high" : "low");
 
-      resultEl.innerHTML =
-        `Risk Group: <span class="${isHigh ? 'high-risk' : 'low-risk'}">${isHigh ? "High risk (predicted survival <6 months)" : "Low risk (predicted survival ≥6 months)"}</span><br>
-         Predicted 6-month survival: <b>${(surv6 * 100).toFixed(1)}%</b><br>
-         Predicted 6-month mortality risk: <b>${(deathRisk6 * 100).toFixed(1)}%</b>`;
-
+      const recEl = document.getElementById("recommendation");
       recEl.innerHTML = isHigh
         ? `<h4>Recommended Management</h4>
            <ul>
@@ -780,9 +760,9 @@
            </ul>`;
 
       recEl.hidden = false;
-      resultBox.style.display = "block";
+      document.getElementById("result_box").style.display = "block";
 
-      resultBox.scrollIntoView({
+      document.getElementById("result_box").scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
@@ -800,20 +780,20 @@
 
       document.getElementById("nlr_display").innerHTML = "";
       document.getElementById("form_error").textContent = "";
-      document.getElementById("result").innerHTML = "";
       document.getElementById("recommendation").innerHTML = "";
       document.getElementById("recommendation").hidden = true;
       document.getElementById("result_box").style.display = "none";
-
-      const badge = document.getElementById("risk_badge");
-      badge.textContent = "Low Risk";
-      badge.className = "risk-badge badge-low";
 
       document.getElementById("score_value").textContent = "0";
       document.getElementById("risk_group_value").textContent = "-";
       document.getElementById("survival_value").textContent = "-";
       document.getElementById("mortality_value").textContent = "-";
-      document.getElementById("nlr_metric_value").textContent = "-";
+
+      const badge = document.getElementById("risk_badge");
+      const resultHead = document.getElementById("result_head");
+      badge.textContent = "Low Risk";
+      badge.className = "risk-badge badge-low";
+      resultHead.classList.remove("high", "low");
     }
   </script>
 </body>
