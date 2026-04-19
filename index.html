@@ -35,27 +35,27 @@
 
   <style>
     :root {
-      --bg: #f4f8fb;
+      --bg: #eef4f8;
       --card: #ffffff;
-      --text: #1f2937;
-      --muted: #667085;
-      --line: #d8e2ec;
-      --line-soft: #e8eef5;
+      --text: #152033;
+      --muted: #4f5f75;
+      --line: #cfdceb;
+      --line-soft: #dfe8f2;
 
-      --blue: #1f5aa6;
-      --blue-dark: #184887;
-      --blue-soft: #eef5ff;
+      --blue: #0f5cc0;
+      --blue-dark: #0b4694;
+      --blue-soft: #eaf3ff;
 
-      --green: #0b7a0b;
-      --green-soft: #edf9ed;
+      --green: #0a8f3d;
+      --green-soft: #e9f9ef;
 
-      --red: #b00020;
-      --red-soft: #fff1f4;
+      --red: #c1121f;
+      --red-soft: #fff0f2;
 
-      --gray-btn: #6c757d;
-      --gray-btn-dark: #56616b;
+      --gray-btn: #6b7280;
+      --gray-btn-dark: #4b5563;
 
-      --shadow: 0 1px 2px rgba(16,24,40,0.05), 0 10px 20px rgba(16,24,40,0.04);
+      --shadow: 0 2px 4px rgba(16,24,40,0.06), 0 12px 26px rgba(16,24,40,0.06);
       --radius: 12px;
     }
 
@@ -65,7 +65,7 @@
       font-family: Arial, sans-serif;
       margin: 0;
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.55;
       background: var(--bg);
     }
 
@@ -76,56 +76,58 @@
     }
 
     .topbar {
-      background: linear-gradient(90deg, #edf4ff 0%, #f6fbff 100%);
-      border: 1px solid #d9e6f6;
-      color: #1d3f73;
+      background: linear-gradient(90deg, #e7f1ff 0%, #f5faff 100%);
+      border: 1px solid #c7dbfb;
+      color: #0f4fa8;
       border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.15px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
       box-shadow: 0 1px 1px rgba(16,24,40,0.02);
     }
 
     .hero {
-      padding: 18px 2px 8px;
+      padding: 18px 2px 10px;
     }
 
     h1 {
-      margin: 0 0 6px 0;
-      color: #1f3b5c;
-      font-size: 33px;
-      line-height: 1.15;
-      letter-spacing: -0.3px;
+      margin: 0 0 8px 0;
+      color: #123b7a;
+      font-size: 42px;
+      line-height: 1.1;
+      letter-spacing: -0.4px;
+      font-weight: 800;
     }
 
     .subtitle {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 19px;
+      font-weight: 800;
       color: #111827;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .summary {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
+      font-size: 15px;
+      color: #42526b;
+      margin-bottom: 14px;
+      line-height: 1.6;
     }
 
     .academic-note {
       margin-top: 12px;
-      padding: 10px 12px;
-      border-left: 4px solid var(--blue);
+      padding: 12px 14px;
+      border-left: 5px solid var(--blue);
       background: var(--blue-soft);
       border-radius: 8px;
-      font-size: 12px;
-      color: #44546a;
-      line-height: 1.45;
+      font-size: 14px;
+      color: #41546d;
+      line-height: 1.55;
     }
 
     .card {
-      margin-top: 16px;
-      padding: 18px;
+      margin-top: 18px;
+      padding: 22px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: var(--card);
@@ -133,16 +135,16 @@
     }
 
     .section-title {
-      margin: 0 0 14px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #153a73;
+      margin: 0 0 16px;
+      font-size: 24px;
+      font-weight: 800;
+      color: #123b7a;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px 22px;
+      gap: 16px 22px;
     }
 
     .field {
@@ -153,44 +155,48 @@
 
     label {
       display: block;
-      margin-bottom: 6px;
-      font-weight: 700;
-      font-size: 13px;
-      color: #344054;
+      margin-bottom: 8px;
+      font-weight: 800;
+      font-size: 18px;
+      color: #24364d;
     }
 
     input, select {
-      padding: 10px 12px;
+      padding: 14px 16px;
       width: 100%;
-      border: 1px solid #cfd8e6;
-      border-radius: 8px;
-      font-size: 14px;
+      border: 1px solid #bdd0e4;
+      border-radius: 10px;
+      font-size: 18px;
       box-sizing: border-box;
       background: #fff;
-      color: #111827;
+      color: #0f172a;
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     input:focus, select:focus {
-      border-color: #8fb3ea;
-      box-shadow: 0 0 0 3px rgba(31,90,166,0.08);
+      border-color: #78a6eb;
+      box-shadow: 0 0 0 4px rgba(15,92,192,0.10);
     }
 
     button {
-      padding: 11px 18px;
+      padding: 14px 22px;
       cursor: pointer;
       background: var(--blue);
       color: white;
       border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: bold;
-      transition: background 0.15s ease;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: 800;
+      transition: background 0.15s ease, transform 0.05s ease;
     }
 
     button:hover {
       background: var(--blue-dark);
+    }
+
+    button:active {
+      transform: translateY(1px);
     }
 
     .btn-secondary {
@@ -203,12 +209,12 @@
 
     .high-risk {
       color: var(--red);
-      font-weight: bold;
+      font-weight: 800;
     }
 
     .low-risk {
       color: var(--green);
-      font-weight: bold;
+      font-weight: 800;
     }
 
     ul {
@@ -217,29 +223,29 @@
     }
 
     small {
-      color: #666;
+      color: #5b6778;
       display: block;
-      margin-top: 10px;
-      line-height: 1.5;
-      font-size: 12px;
+      margin-top: 12px;
+      line-height: 1.6;
+      font-size: 14px;
     }
 
     .error {
       color: var(--red);
-      font-weight: 600;
-      margin-top: 10px;
-      font-size: 13px;
+      font-weight: 700;
+      margin-top: 12px;
+      font-size: 15px;
     }
 
     .button-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 12px;
+      margin-top: 18px;
     }
 
     .result-box {
-      margin-top: 18px;
+      margin-top: 20px;
       border-radius: 12px;
       border: 1px solid #d8e6ff;
       background: #fbfdff;
@@ -261,33 +267,33 @@
     }
 
     .result-head.high {
-      background: linear-gradient(90deg, #b00020 0%, #d7263d 100%);
+      background: linear-gradient(90deg, #c1121f 0%, #e5383b 100%);
       color: #ffffff;
     }
 
     .result-head.low {
-      background: linear-gradient(90deg, #0b7a0b 0%, #1f9d55 100%);
+      background: linear-gradient(90deg, #0a8f3d 0%, #22b35c 100%);
       color: #ffffff;
     }
 
     .score-main {
       display: flex;
       align-items: baseline;
-      gap: 10px;
+      gap: 12px;
       flex-wrap: wrap;
     }
 
     .score-label {
-      font-size: 12px;
-      color: rgba(255,255,255,0.92);
-      font-weight: 700;
+      font-size: 15px;
+      color: rgba(255,255,255,0.95);
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
     .score-value {
-      font-size: 34px;
-      font-weight: 800;
+      font-size: 54px;
+      font-weight: 900;
       color: #ffffff;
       line-height: 1;
     }
@@ -295,14 +301,15 @@
     .risk-badge {
       display: inline-flex;
       align-items: center;
-      padding: 8px 14px;
+      padding: 10px 18px;
       border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
+      font-size: 20px;
+      font-weight: 900;
       white-space: nowrap;
       background: rgba(255,255,255,0.16);
       color: #ffffff;
       border: 1px solid rgba(255,255,255,0.28);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
     }
 
     .badge-high,
@@ -313,7 +320,7 @@
     }
 
     .result-body {
-      padding: 16px;
+      padding: 18px;
     }
 
     .metrics {
@@ -324,30 +331,31 @@
     }
 
     .metric {
-      padding: 11px 12px;
+      padding: 14px 14px;
       border: 1px solid var(--line-soft);
-      border-radius: 9px;
+      border-radius: 10px;
       background: #fff;
     }
 
     .metric-name {
-      font-size: 11px;
-      color: var(--muted);
-      font-weight: 700;
+      font-size: 14px;
+      color: #5f6f86;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.25px;
-      margin-bottom: 4px;
+      letter-spacing: 0.3px;
+      margin-bottom: 6px;
     }
 
     .metric-value {
-      font-size: 15px;
-      color: #111827;
-      font-weight: 700;
+      font-size: 28px;
+      color: #0f172a;
+      font-weight: 900;
+      line-height: 1.3;
     }
 
     .recommendation-card {
       margin-top: 14px;
-      padding: 14px;
+      padding: 16px;
       border-radius: 10px;
       border: 1px solid var(--line-soft);
       background: #fff;
@@ -356,7 +364,12 @@
     .recommendation-card h4 {
       margin: 0 0 8px 0;
       color: #1f3b5c;
-      font-size: 14px;
+      font-size: 18px;
+    }
+
+    .recommendation-card ul li {
+      font-size: 16px;
+      margin-bottom: 4px;
     }
 
     footer {
@@ -367,22 +380,24 @@
 
     .footer-box {
       margin-top: 12px;
-      padding: 16px 18px;
+      padding: 18px 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #fcfcfd;
       box-shadow: var(--shadow);
-      font-size: 12px;
-      color: #4b5563;
+      font-size: 15px;
+      color: #334155;
     }
 
     .footer-box p {
-      margin: 0 0 8px 0;
+      margin: 0 0 10px 0;
+      line-height: 1.6;
     }
 
     .footer-link {
       margin-top: 8px;
       word-break: break-word;
+      font-size: 15px;
     }
 
     .footer-link a {
@@ -394,17 +409,10 @@
       text-decoration: underline;
     }
 
-    .mini-note {
-      margin-top: 10px;
-      font-size: 11px;
-      color: #6b7280;
-      line-height: 1.45;
-    }
-
     .flag-box {
       margin-top: 16px;
       text-align: center;
-      padding: 12px 16px;
+      padding: 14px 16px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: #ffffff;
@@ -412,17 +420,17 @@
     }
 
     .flag-title {
-      font-size: 11px;
+      font-size: 12px;
       color: #666;
-      margin-bottom: 6px;
-      font-weight: 700;
-      letter-spacing: 0.2px;
+      margin-bottom: 8px;
+      font-weight: 800;
+      letter-spacing: 0.25px;
       text-transform: uppercase;
     }
 
     .flag-counter-wrap {
       display: inline-block;
-      transform: scale(0.9);
+      transform: scale(0.95);
       transform-origin: center;
     }
 
@@ -432,7 +440,23 @@
       }
 
       h1 {
-        font-size: 28px;
+        font-size: 34px;
+      }
+
+      .subtitle {
+        font-size: 17px;
+      }
+
+      .section-title {
+        font-size: 20px;
+      }
+
+      label {
+        font-size: 16px;
+      }
+
+      input, select {
+        font-size: 17px;
       }
 
       .grid-2,
@@ -446,6 +470,18 @@
 
       button, .btn-secondary {
         width: 100%;
+      }
+
+      .score-value {
+        font-size: 42px;
+      }
+
+      .risk-badge {
+        font-size: 16px;
+      }
+
+      .metric-value {
+        font-size: 24px;
       }
     }
   </style>
@@ -470,6 +506,7 @@
       </div>
     </div>
 
+    <!-- LAB SECTION -->
     <div class="card">
       <h4 class="section-title">Laboratory Parameters (Automatic NLR Calculation)</h4>
 
@@ -495,6 +532,7 @@
       </small>
     </div>
 
+    <!-- CLINICAL SECTION -->
     <div class="card">
       <h4 class="section-title">Clinical Predictors</h4>
 
@@ -683,7 +721,7 @@
       const nlr36 = (nlr > 3.6) ? 1 : 0;
 
       nlrDisplay.innerHTML = `
-        <div style="padding:8px 10px; background:#f4f8ff; border:1px solid #d8e6ff; border-radius:8px; font-size:13px;">
+        <div style="padding:10px 12px; background:#eef5ff; border:1px solid #d2e3ff; border-radius:10px; font-size:15px; color:#294769;">
           <strong>Calculated NLR:</strong> ${nlr.toFixed(2)}
           (${nlr36 ? "High: >3.6" : "Low: ≤3.6"})
         </div>
