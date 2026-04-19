@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/sitemap.xml
