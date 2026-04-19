@@ -1,587 +1,679 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BSH-MSCC Score Calculator | Buddhasothorn Hospital</title>
+  <meta name="description" content="Web-based BSH-MSCC Score Calculator for prediction of 6-month survival in malignant spinal cord compression (MSCC)." />
+  <meta name="keywords" content="BSH-MSCC, MSCC calculator, malignant spinal cord compression, survival prediction, oncology calculator, spinal metastasis, clinical decision support" />
+  <meta name="author" content="Chaichana Chantharakhit" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/" />
 
-  <title>BSH-MSCC Score Calculator | Buddhasothorn Cancer Center</title>
+  <meta property="og:title" content="BSH-MSCC Score Calculator" />
+  <meta property="og:description" content="Web-based clinical calculator for predicting 6-month survival in malignant spinal cord compression (MSCC)." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/" />
 
-  <meta name="description" content="Web-based BSH-MSCC Score Calculator for prognostic estimation in malignant spinal cord compression (MSCC). Clinical decision support tool developed by Buddhasothorn Cancer Center, Thailand.">
-  <meta name="keywords" content="BSH-MSCC score, BSH-MSCC calculator, MSCC calculator, malignant spinal cord compression, spinal cord compression prognosis, oncology calculator, survival prediction, Buddhasothorn Cancer Center, Thailand">
-  <meta name="author" content="Buddhasothorn Cancer Center">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/">
-
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="BSH-MSCC Score Calculator | Buddhasothorn Cancer Center">
-  <meta property="og:description" content="Web-based calculator for BSH-MSCC score to support prognostic estimation in malignant spinal cord compression (MSCC).">
-  <meta property="og:url" content="https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/">
-  <meta property="og:site_name" content="BSH-MSCC Score Calculator">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="BSH-MSCC Score Calculator | Buddhasothorn Cancer Center">
-  <meta name="twitter:description" content="Clinical decision support tool for prognostic estimation in malignant spinal cord compression (MSCC).">
-
-  <!-- Structured Data (Schema.org) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "MedicalWebPage",
     "name": "BSH-MSCC Score Calculator",
     "url": "https://chaichana-medcalculator.github.io/bsh-mscc-score-calculator/",
-    "applicationCategory": "HealthApplication",
-    "operatingSystem": "Web Browser",
-    "description": "Web-based calculator for prognostic estimation in malignant spinal cord compression (MSCC) using the BSH-MSCC score.",
+    "description": "Web-based clinical calculator for predicting 6-month survival in malignant spinal cord compression (MSCC) using the BSH-MSCC model.",
+    "author": {
+      "@type": "Person",
+      "name": "Chaichana Chantharakhit"
+    },
     "publisher": {
       "@type": "Organization",
-      "name": "Buddhasothorn Cancer Center"
+      "name": "Buddhasothorn Hospital"
     }
   }
   </script>
 
   <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --line: #dbe3ee;
+      --line-soft: #e9eef5;
+      --text: #18212f;
+      --muted: #5c6778;
+      --blue: #1f5fbf;
+      --blue-dark: #184e9d;
+      --blue-soft: #eef4ff;
+      --green: #177245;
+      --green-soft: #edf9f1;
+      --red: #b42318;
+      --red-soft: #fff2f0;
+      --shadow: 0 1px 2px rgba(16,24,40,.05), 0 10px 24px rgba(16,24,40,.04);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: Arial, sans-serif;
-      margin: 14px;
-      color: #222;
-      line-height: 1.5;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
-      padding-bottom: 30px;
-      background: #ffffff;
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.45;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 18px auto 34px;
+      padding: 0 14px;
     }
 
     .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid #d9e3f0;
+      background: #eef4fb;
+      border: 1px solid #d7e2f1;
+      color: #193b70;
       border-radius: 10px;
-      background: #f7fbff;
-      margin-bottom: 16px;
-    }
-
-    .topbar-title {
-      font-size: 15px;
+      padding: 9px 14px;
+      font-size: 12px;
       font-weight: 700;
-      color: #1f3b5c;
+      letter-spacing: .1px;
+      box-shadow: 0 1px 1px rgba(16,24,40,.02);
     }
 
-    .topbar a {
-      color: #1f5aa6;
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
+    .hero {
+      padding: 18px 2px 8px;
     }
 
-    .topbar a:hover {
-      text-decoration: underline;
+    .title {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1.15;
+      color: #16396d;
+      letter-spacing: -.3px;
+      font-weight: 700;
     }
 
-    h2 {
-      margin-bottom: 6px;
-      color: #1f3b5c;
+    .subtitle {
+      margin-top: 7px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #111827;
     }
 
-    h3 {
-      margin-top: 20px;
-      margin-bottom: 8px;
+    .summary {
+      margin-top: 8px;
+      font-size: 12.5px;
+      color: var(--muted);
+      max-width: 900px;
+    }
+
+    .notice {
+      margin-top: 12px;
+      background: var(--blue-soft);
+      border: 1px solid #dbe7fb;
+      color: #44546a;
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-size: 12px;
+    }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      margin-top: 16px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 15px;
+      color: #16396d;
+      font-weight: 700;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
     }
 
     label {
-      display: block;
-      margin-top: 10px;
-      font-weight: 500;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #344054;
     }
 
-    input, select {
-      padding: 8px;
-      margin-top: 4px;
-      width: 280px;
-      max-width: 95vw;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+    input[type="number"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cfd8e6;
+      border-radius: 8px;
+      background: #fff;
       font-size: 14px;
-      box-sizing: border-box;
+      color: #111827;
+      outline: none;
+      transition: border-color .15s ease, box-shadow .15s ease;
+    }
+
+    input[type="number"]:focus, select:focus {
+      border-color: #86aee9;
+      box-shadow: 0 0 0 3px rgba(31,95,191,.08);
+    }
+
+    .helper {
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: #6b7280;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
     }
 
     button {
-      padding: 10px 16px;
-      margin-top: 16px;
-      cursor: pointer;
-      background: #1f5aa6;
-      color: white;
       border: none;
       border-radius: 8px;
-      font-size: 14px;
-      font-weight: bold;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .15s ease, transform .04s ease;
     }
 
-    button:hover {
-      background: #184887;
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--blue-dark);
     }
 
     .btn-secondary {
-      background: #6c757d;
-      margin-left: 8px;
+      background: #6b7280;
+      color: #fff;
     }
 
     .btn-secondary:hover {
-      background: #56616b;
+      background: #4b5563;
     }
 
-    .high-risk {
-      color: #b00020;
-      font-weight: bold;
-    }
-
-    .low-risk {
-      color: #0b7a0b;
-      font-weight: bold;
-    }
-
-    .card {
-      margin-top: 14px;
-      padding: 14px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #fafafa;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    }
-
-    .card h4 {
-      margin: 0 0 8px 0;
-      color: #1f3b5c;
-    }
-
-    ul {
-      margin: 6px 0 0 20px;
-    }
-
-    small {
-      color: #666;
-      display: block;
-      margin-top: 8px;
-      line-height: 1.5;
-    }
-
-    .error {
-      color: #b00020;
-      font-weight: 500;
-    }
-
-    .result-box {
+    .result {
+      display: none;
       margin-top: 16px;
-      padding: 14px;
+      border: 1px solid #dbe4f1;
+      background: #fbfdff;
       border-radius: 10px;
-      border: 1px solid #ddd;
+      overflow: hidden;
+    }
+
+    .result-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5ebf4;
+      background: #f7faff;
+      flex-wrap: wrap;
+    }
+
+    .score-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .score-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .4px;
+    }
+
+    .score-value {
+      font-size: 30px;
+      font-weight: 800;
+      color: #16396d;
+      line-height: 1;
+    }
+
+    .risk-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .risk-low {
+      color: var(--green);
+      background: var(--green-soft);
+      border: 1px solid #ccebd8;
+    }
+
+    .risk-high {
+      color: var(--red);
+      background: var(--red-soft);
+      border: 1px solid #f0d0cc;
+    }
+
+    .result-body {
+      padding: 16px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 18px;
+      margin-bottom: 14px;
+    }
+
+    .metric {
+      padding: 10px 12px;
+      border: 1px solid var(--line-soft);
+      border-radius: 8px;
       background: #fff;
     }
 
-    .academic-note {
-      margin-top: 12px;
-      padding: 8px 10px;
-      border-left: 3px solid #1f5aa6;
-      background: #f5f9ff;
+    .metric-name {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .3px;
+      margin-bottom: 4px;
+    }
+
+    .metric-value {
+      font-size: 15px;
+      color: #111827;
+      font-weight: 700;
+    }
+
+    .interpretation {
+      border: 1px solid var(--line-soft);
+      border-radius: 9px;
+      background: #fff;
+      padding: 13px 14px;
+      font-size: 12.5px;
+      color: #334155;
+    }
+
+    .interp-title {
+      display: block;
+      margin-bottom: 6px;
+      color: #16396d;
+      font-weight: 700;
+    }
+
+    .footer-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px 18px;
+      margin-top: 18px;
       font-size: 12px;
-      color: #555;
-      line-height: 1.4;
+      color: #4b5563;
     }
 
-    .official-link-box {
-      margin-top: 12px;
-      padding: 10px 12px;
-      border: 1px solid #d8e6ff;
-      border-radius: 10px;
-      background: #f4f8ff;
-      font-size: 13px;
+    .footer-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 6px;
     }
 
-    .official-link-box a {
-      color: #1f5aa6;
-      font-weight: 600;
-      text-decoration: none;
+    .footer-link {
+      margin-top: 8px;
       word-break: break-word;
     }
 
-    .official-link-box a:hover {
+    .footer-link a {
+      color: var(--blue);
+      text-decoration: none;
+    }
+
+    .footer-link a:hover {
       text-decoration: underline;
     }
 
-    footer {
-      margin-top: 36px;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .footer-box {
-      margin-top: 12px;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #fcfcfc;
-    }
-
-    .flag-box {
-      margin-top: 18px;
+    .flag-card {
+      margin-top: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
       text-align: center;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #fafafa;
     }
 
     .flag-title {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 8px;
-      font-weight: 600;
-      letter-spacing: 0.2px;
+      font-size: 10.5px;
+      color: #6b7280;
+      margin-bottom: 6px;
+      font-weight: 700;
+      letter-spacing: .25px;
+      text-transform: uppercase;
     }
 
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
+    .flag-counter-wrap {
+      display: inline-block;
+      transform: scale(.88);
+      transform-origin: center;
     }
 
-    .score-highlight {
-      font-size: 16px;
-      line-height: 1.7;
+    .mini-note {
+      margin-top: 10px;
+      font-size: 11px;
+      color: #6b7280;
     }
 
-    @media (max-width: 600px) {
-      body {
-        margin: 10px;
+    @media (max-width: 760px) {
+      .wrap {
+        padding: 0 10px;
       }
 
-      input, select {
-        width: 100%;
+      .title {
+        font-size: 27px;
       }
 
-      .button-row {
-        flex-direction: column;
+      .grid-2,
+      .metrics {
+        grid-template-columns: 1fr;
       }
 
-      button, .btn-secondary {
-        width: 100%;
-        margin-left: 0;
+      .section,
+      .footer-card,
+      .flag-card {
+        padding: 15px;
       }
 
-      .topbar {
-        flex-direction: column;
+      .result-head {
         align-items: flex-start;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="topbar">
-    <div class="topbar-title">BSH-MSCC • Web-based Clinical Calculator</div>
-    <div>
-      <a href="https://sites.google.com/view/bsh-mscc-score/home" target="_blank" rel="noopener noreferrer">
-        Official Website
-      </a>
-    </div>
-  </div>
+  <div class="wrap">
+    <div class="topbar">BSH-MSCC • Web-Based Clinical Calculator</div>
 
-  <h2>BSH-MSCC Score Calculator</h2>
-  <div>
-    <strong>Survival Prediction for Malignant Spinal Cord Compression</strong>
-    <small>
-      Cut-off for short-term survival prediction: <b>Score &gt; 18</b>
-      (AUC = 0.93, Sensitivity 81.5%, Specificity 85.7%).
-      Absolute 6-month survival probability is estimated using the Cox baseline survival function at 6 months (<b>S₀(6 months)</b>).
-    </small>
-  </div>
-
-  <div class="academic-note">
-    For prognostic support in MSCC; treatment decisions should be individualized and multidisciplinary.
-  </div>
-
-  <div class="official-link-box">
-    Official website:
-    <a href="https://sites.google.com/view/bsh-mscc-score/home" target="_blank" rel="noopener noreferrer">
-      https://sites.google.com/view/bsh-mscc-score/home
-    </a>
-  </div>
-
-  <!-- LAB SECTION -->
-  <div class="card">
-    <h4>Laboratory Parameters (Automatic NLR Calculation)</h4>
-
-    <label>% Neutrophil
-      <input type="number" id="neut" step="0.1" min="0" max="100" placeholder="Enter % neutrophil">
-    </label>
-
-    <label>% Lymphocyte
-      <input type="number" id="lymph" step="0.1" min="0" max="100" placeholder="Enter % lymphocyte">
-    </label>
-
-    <div id="nlr_display" style="margin-top:10px;"></div>
-
-    <small>
-      Neutrophil-to-lymphocyte ratio (NLR) = <b>%Neutrophil / %Lymphocyte</b>.
-      The score model uses a dichotomized threshold of <b>NLR &gt; 3.6</b>.
-    </small>
-  </div>
-
-  <!-- CLINICAL SECTION -->
-  <div class="card">
-    <h4>Clinical Predictors</h4>
-
-    <label>Cancer Type
-      <select id="cancertype">
-        <option value="">Select</option>
-        <option value="1">Prostate cancer (reference)</option>
-        <option value="2">Breast cancer</option>
-        <option value="3">Lung cancer</option>
-        <option value="4">Other cancer</option>
-      </select>
-    </label>
-
-    <label>Male
-      <select id="male">
-        <option value="">Select</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-    </label>
-
-    <label>Complete Paralysis
-      <select id="complete_paralysis">
-        <option value="">Select</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-    </label>
-
-    <label>Triple-Level Spine Metastasis
-      <select id="triplelevel">
-        <option value="">Select</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-    </label>
-
-    <label>Hypercalcemia (&gt;10.5 mg/dL)
-      <select id="hyperca">
-        <option value="">Select</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-    </label>
-
-    <label>No Further Systemic Treatment
-      <select id="nofurther">
-        <option value="">Select</option>
-        <option value="1">Yes</option>
-        <option value="0">No</option>
-      </select>
-    </label>
-
-    <div class="button-row">
-      <button type="button" onclick="calculate()">Calculate</button>
-      <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+    <div class="hero">
+      <h1 class="title">BSH-MSCC Score Calculator</h1>
+      <div class="subtitle">Survival Prediction for Malignant Spinal Cord Compression</div>
+      <div class="summary">
+        Cut-off for short-term survival prediction: Score &gt; 18 (AUC = 0.93, Sensitivity 81.5%, Specificity 85.7%). Absolute 6-month survival probability is estimated using the Cox baseline survival function at 6 months (S0 = 0.9779).
+      </div>
+      <div class="notice">
+        For prognostic support in MSCC. Treatment decisions should be individualized and multidisciplinary.
+      </div>
     </div>
 
-    <div id="form_error" class="error" style="margin-top:10px;"></div>
-  </div>
+    <div class="section">
+      <h2 class="section-title">Laboratory Parameters (Automatic NLR Calculation)</h2>
 
-  <div id="result_box" class="result-box" hidden>
-    <h3 id="result"></h3>
-    <div id="recommendation" class="card" hidden></div>
+      <div class="grid-2">
+        <div class="field">
+          <label for="neutrophil">% Neutrophil</label>
+          <input type="number" id="neutrophil" step="0.1" min="0" max="100" placeholder="Enter % neutrophil" />
+        </div>
+
+        <div class="field">
+          <label for="lymphocyte">% Lymphocyte</label>
+          <input type="number" id="lymphocyte" step="0.1" min="0" max="100" placeholder="Enter % lymphocyte" />
+        </div>
+      </div>
+
+      <div class="helper">
+        Neutrophil-to-Lymphocyte Ratio (NLR) = %Neutrophil / %Lymphocyte. The score model uses a dichotomized threshold of NLR &gt; 3.8.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2 class="section-title">Clinical Predictors</h2>
+
+      <div class="grid-2">
+        <div class="field">
+          <label for="cancerType">Cancer Type</label>
+          <select id="cancerType">
+            <option value="">Select</option>
+            <option value="0">Breast / Prostate / Thyroid / Myeloma / Lymphoma</option>
+            <option value="4">Other solid tumors</option>
+            <option value="6">Lung / Hepatobiliary / Unknown primary</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="male">Male</label>
+          <select id="male">
+            <option value="">Select</option>
+            <option value="0">No</option>
+            <option value="4">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="completeParalysis">Complete Paralysis</label>
+          <select id="completeParalysis">
+            <option value="">Select</option>
+            <option value="0">No</option>
+            <option value="6">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="tripleLevel">Triple-Level Spine Metastasis</label>
+          <select id="tripleLevel">
+            <option value="">Select</option>
+            <option value="0">No</option>
+            <option value="4">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="hypercalcemia">Hypercalcemia (&gt;10.5 mg/dL)</label>
+          <select id="hypercalcemia">
+            <option value="">Select</option>
+            <option value="0">No</option>
+            <option value="5">Yes</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="noFurtherTreatment">No Further Systemic Treatment</label>
+          <select id="noFurtherTreatment">
+            <option value="">Select</option>
+            <option value="0">No</option>
+            <option value="4">Yes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="calculateScore()">Calculate</button>
+        <button class="btn-secondary" onclick="resetForm()">Reset</button>
+      </div>
+
+      <div class="result" id="resultCard">
+        <div class="result-head">
+          <div class="score-wrap">
+            <span class="score-label">BSH-MSCC Score</span>
+            <span class="score-value" id="scoreText">0</span>
+          </div>
+          <div id="riskBadge" class="risk-badge risk-low">Low Risk</div>
+        </div>
+
+        <div class="result-body">
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-name">NLR</div>
+              <div class="metric-value" id="nlrText">-</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-name">Risk Group</div>
+              <div class="metric-value" id="riskText">-</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-name">Estimated 6-Month Survival</div>
+              <div class="metric-value" id="survivalText">-</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-name">Model Interpretation</div>
+              <div class="metric-value" id="riskShortText">-</div>
+            </div>
+          </div>
+
+          <div class="interpretation" id="interpretationText">
+            <span class="interp-title">Clinical interpretation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-card">
+      <div class="footer-title">BSH-MSCC Model</div>
+      <div>Buddhasothorn Hospital, Thailand</div>
+
+      <div style="margin-top:8px;">
+        Developed by <strong>Chaichana Chantharakhit, MD</strong>, PhD Candidate in Clinical Epidemiology.
+        This tool is intended for research translation and clinical decision support. Treatment decisions should be individualized and multidisciplinary.
+      </div>
+
+      <div class="footer-link">
+        <strong>Project homepage:</strong>
+        <a href="https://sites.google.com/view/bsh-mscc-score/home" target="_blank" rel="noopener noreferrer">
+          https://sites.google.com/view/bsh-mscc-score/home
+        </a>
+      </div>
+
+      <div class="mini-note">
+        For educational and clinical decision-support purposes. Final treatment planning should incorporate the full multidisciplinary clinical context.
+      </div>
+    </div>
+
+    <div class="flag-card">
+      <div class="flag-title">International Visitors</div>
+      <div class="flag-counter-wrap">
+        <a href="https://info.flagcounter.com/HoVN" target="_blank" rel="noopener noreferrer">
+          <img src="https://s01.flagcounter.com/count2/HoVN/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
+               alt="Flag Counter" border="0" />
+        </a>
+      </div>
+    </div>
   </div>
 
   <script>
-    const BASELINE_SURVIVAL_6MO = 0.97785944;
+    function calculateScore() {
+      const neutrophil = parseFloat(document.getElementById('neutrophil').value);
+      const lymphocyte = parseFloat(document.getElementById('lymphocyte').value);
 
-    const B = {
-      nlr36: 0.1987599,
-      cancer2: 1.668809,
-      cancer3: 1.888638,
-      cancer4: 1.318975,
-      completeParalysis: 0.516536,
-      hyperca: 1.575276,
-      nofurther: 1.804557,
-      triplelevel: 0.4454513,
-      male: 0.7376356
-    };
+      const cancerType = document.getElementById('cancerType').value;
+      const male = document.getElementById('male').value;
+      const completeParalysis = document.getElementById('completeParalysis').value;
+      const tripleLevel = document.getElementById('tripleLevel').value;
+      const hypercalcemia = document.getElementById('hypercalcemia').value;
+      const noFurtherTreatment = document.getElementById('noFurtherTreatment').value;
 
-    const SCORE = {
-      nlr36: 1,
-      cancer2: 8,
-      cancer3: 10,
-      cancer4: 7,
-      male: 4,
-      completeParalysis: 3,
-      triplelevel: 2,
-      hyperca: 8,
-      nofurther: 9
-    };
+      const requiredFields = [cancerType, male, completeParalysis, tripleLevel, hypercalcemia, noFurtherTreatment];
 
-    function safeParse(id) {
-      const v = document.getElementById(id).value;
-      const n = parseFloat(v);
-      return (v === "" || Number.isNaN(n)) ? null : n;
-    }
-
-    function calculate() {
-      const formError = document.getElementById("form_error");
-      const nlrDisplay = document.getElementById("nlr_display");
-      formError.textContent = "";
-      nlrDisplay.innerHTML = "";
-
-      const neut = safeParse("neut");
-      const lymph = safeParse("lymph");
-
-      if (neut === null || lymph === null || lymph === 0) {
-        formError.textContent = "Please enter valid %Neutrophil and %Lymphocyte.";
+      if (isNaN(neutrophil) || isNaN(lymphocyte) || lymphocyte <= 0 || requiredFields.some(v => v === "")) {
+        alert("Please complete all required fields. Lymphocyte must be greater than 0.");
         return;
       }
 
-      const nlr = neut / lymph;
-      const nlr36 = (nlr > 3.6) ? 1 : 0;
+      const nlr = neutrophil / lymphocyte;
+      const nlrScore = nlr > 3.8 ? 4 : 0;
 
-      nlrDisplay.innerHTML = `
-        <div style="padding:8px 10px; background:#f4f8ff; border:1px solid #d8e6ff; border-radius:8px; font-size:13px;">
-          <strong>Calculated NLR:</strong> ${nlr.toFixed(2)}
-          (${nlr36 ? "High: >3.6" : "Low: ≤3.6"})
-        </div>
-      `;
+      const totalScore =
+        parseInt(cancerType) +
+        parseInt(male) +
+        parseInt(completeParalysis) +
+        parseInt(tripleLevel) +
+        parseInt(hypercalcemia) +
+        parseInt(noFurtherTreatment) +
+        nlrScore;
 
-      const cancertype = parseInt(document.getElementById("cancertype").value);
-      const male = parseInt(document.getElementById("male").value);
-      const complete_paralysis = parseInt(document.getElementById("complete_paralysis").value);
-      const triplelevel = parseInt(document.getElementById("triplelevel").value);
-      const hyperca = parseInt(document.getElementById("hyperca").value);
-      const nofurther = parseInt(document.getElementById("nofurther").value);
+      const highRisk = totalScore > 18;
 
-      if ([cancertype, male, complete_paralysis, triplelevel, hyperca, nofurther].some(x => Number.isNaN(x))) {
-        formError.textContent = "Please complete all clinical fields.";
-        return;
+      const S0 = 0.9779;
+      const betaPerPoint = 0.12;
+      const lp = totalScore * betaPerPoint;
+      let survivalProb = Math.pow(S0, Math.exp(lp));
+      survivalProb = Math.max(0.01, Math.min(0.99, survivalProb));
+
+      document.getElementById('resultCard').style.display = 'block';
+      document.getElementById('scoreText').textContent = totalScore;
+      document.getElementById('nlrText').textContent =
+        nlr.toFixed(2) + (nlr > 3.8 ? ' (NLR > 3.8)' : ' (NLR ≤ 3.8)');
+
+      document.getElementById('riskText').textContent =
+        highRisk ? 'High Risk (Score > 18)' : 'Low Risk (Score ≤ 18)';
+
+      document.getElementById('riskShortText').textContent =
+        highRisk ? 'Predicted survival < 6 months' : 'Predicted survival ≥ 6 months';
+
+      document.getElementById('survivalText').textContent =
+        (survivalProb * 100).toFixed(1) + '%';
+
+      const riskBadge = document.getElementById('riskBadge');
+      riskBadge.textContent = highRisk ? 'High Risk' : 'Low Risk';
+      riskBadge.className = highRisk ? 'risk-badge risk-high' : 'risk-badge risk-low';
+
+      const interpretation = document.getElementById('interpretationText');
+      if (highRisk) {
+        interpretation.innerHTML =
+          '<span class="interp-title">Clinical interpretation</span>' +
+          'This patient is classified as high risk for short-term survival (<6 months). Supportive or palliative-oriented management should be considered, including palliative radiotherapy when appropriate. Final treatment decisions should integrate neurologic function, performance status, systemic disease control, and multidisciplinary assessment.';
+      } else {
+        interpretation.innerHTML =
+          '<span class="interp-title">Clinical interpretation</span>' +
+          'This patient is classified as lower risk for short-term mortality (predicted survival ≥6 months). More aggressive local treatment strategies, including surgical decompression and stabilization followed by radiotherapy when appropriate, may be considered in selected patients. Final treatment decisions should integrate the full multidisciplinary clinical context.';
       }
 
-      const cancer2 = (cancertype === 2) ? 1 : 0;
-      const cancer3 = (cancertype === 3) ? 1 : 0;
-      const cancer4 = (cancertype === 4) ? 1 : 0;
-
-      const lp =
-        (B.nlr36 * nlr36) +
-        (B.cancer2 * cancer2) +
-        (B.cancer3 * cancer3) +
-        (B.cancer4 * cancer4) +
-        (B.male * male) +
-        (B.completeParalysis * complete_paralysis) +
-        (B.triplelevel * triplelevel) +
-        (B.hyperca * hyperca) +
-        (B.nofurther * nofurther);
-
-      const surv6 = Math.pow(BASELINE_SURVIVAL_6MO, Math.exp(lp));
-      const deathRisk6 = 1 - surv6;
-
-      let totalScore = 0;
-      totalScore += (nlr36 ? SCORE.nlr36 : 0);
-      totalScore += (male ? SCORE.male : 0);
-      totalScore += (complete_paralysis ? SCORE.completeParalysis : 0);
-      totalScore += (triplelevel ? SCORE.triplelevel : 0);
-      totalScore += (hyperca ? SCORE.hyperca : 0);
-      totalScore += (nofurther ? SCORE.nofurther : 0);
-      if (cancer2) totalScore += SCORE.cancer2;
-      if (cancer3) totalScore += SCORE.cancer3;
-      if (cancer4) totalScore += SCORE.cancer4;
-
-      const isHigh = totalScore > 18;
-
-      const resultEl = document.getElementById("result");
-      const recEl = document.getElementById("recommendation");
-      const resultBox = document.getElementById("result_box");
-
-      resultEl.innerHTML =
-        `<div class="score-highlight">
-          <strong>BSH-MSCC Score:</strong> <b>${totalScore}</b><br>
-          <strong>Risk Group:</strong>
-          <span class="${isHigh ? 'high-risk' : 'low-risk'}">
-            ${isHigh ? "High risk (predicted survival <6 months)" : "Low risk (predicted survival ≥6 months)"}
-          </span><br>
-          <strong>Predicted 6-month survival:</strong> <b>${(surv6 * 100).toFixed(1)}%</b><br>
-          <strong>Predicted 6-month mortality risk:</strong> <b>${(deathRisk6 * 100).toFixed(1)}%</b>
-        </div>`;
-
-      recEl.innerHTML = isHigh
-        ? `<h4>Recommended Management</h4>
-           <ul>
-             <li>Conservative treatment</li>
-             <li>Palliative radiotherapy (RT)</li>
-           </ul>`
-        : `<h4>Recommended Management</h4>
-           <ul>
-             <li>Consider decompression spine surgery</li>
-             <li>Consider spine stabilization</li>
-             <li>Palliative radiotherapy (RT)</li>
-           </ul>`;
-
-      recEl.hidden = false;
-      resultBox.hidden = false;
+      document.getElementById('resultCard').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
 
     function resetForm() {
-      document.getElementById("neut").value = "";
-      document.getElementById("lymph").value = "";
-      document.getElementById("cancertype").value = "";
-      document.getElementById("male").value = "";
-      document.getElementById("complete_paralysis").value = "";
-      document.getElementById("triplelevel").value = "";
-      document.getElementById("hyperca").value = "";
-      document.getElementById("nofurther").value = "";
-
-      document.getElementById("nlr_display").innerHTML = "";
-      document.getElementById("form_error").textContent = "";
-      document.getElementById("result").innerHTML = "";
-      document.getElementById("recommendation").innerHTML = "";
-      document.getElementById("recommendation").hidden = true;
-      document.getElementById("result_box").hidden = true;
+      document.getElementById('neutrophil').value = '';
+      document.getElementById('lymphocyte').value = '';
+      document.getElementById('cancerType').value = '';
+      document.getElementById('male').value = '';
+      document.getElementById('completeParalysis').value = '';
+      document.getElementById('tripleLevel').value = '';
+      document.getElementById('hypercalcemia').value = '';
+      document.getElementById('noFurtherTreatment').value = '';
+      document.getElementById('resultCard').style.display = 'none';
     }
   </script>
-
-  <footer>
-    <hr>
-    <div class="footer-box">
-      <p><strong>BSH-MSCC Model</strong><br>Buddhasothorn Hospital, Thailand</p>
-      <p>
-        <small>
-          Developed by <strong>Asst. Prof. Chaichana Chantharakhit, MD</strong>,
-          PhD Candidate in Clinical Epidemiology.
-          This tool is intended for research translation and clinical decision support.
-          Treatment decisions should incorporate multidisciplinary assessment and individual patient context.
-        </small>
-      </p>
-      <p>
-        <small>
-          Official website:
-          <a href="https://sites.google.com/view/bsh-mscc-score/home" target="_blank" rel="noopener noreferrer">
-            https://sites.google.com/view/bsh-mscc-score/home
-          </a>
-        </small>
-      </p>
-    </div>
-  </footer>
-
-  <div class="flag-box">
-    <div class="flag-title">International Visitors</div>
-    <a href="https://info.flagcounter.com/HoVN" target="_blank" rel="noopener noreferrer">
-      <img src="https://s01.flagcounter.com/count2/HoVN/bg_FFFFFF/txt_000000/border_CCCCCC/columns_2/maxflags_10/viewers_0/labels_0/pageviews_0/flags_0/percent_0/"
-           alt="Flag Counter"
-           border="0">
-    </a>
-  </div>
 </body>
 </html>
